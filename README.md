@@ -1,7 +1,11 @@
 
 # GitHub支持 Markdown 目录生成
 
-**注意: 必须要以大写的 [TOC] 作为开头**
+参考项目: <br>
+<https://github.com/YuraAAA/Markdown-Toc-Generator/> <br>
+<https://github.com/zhang0peter/markdown2html>
+
+## 必须要以大写字母 **[TOC]** 作为开头
 ```
 [TOC]
 # Heading **some bold** 
