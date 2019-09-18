@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.github.doc</groupId>
+    <artifactId>github-markdown-toc</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <name>github-markdown-toc</name>
+    <url>http://www.example.com</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.vladsch.flexmark</groupId>
+            <artifactId>flexmark-all</artifactId>
+            <version>0.50.40</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+            <plugins>
+                <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
+                <plugin>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+                <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.0.2</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.0</version>
+                    <configuration>
+                        <target>1.8</target>
+                        <source>1.8</source>
+                        <encoding>UTF-8</encoding>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.22.1</version>
+                </plugin>
+                <!-- Maven对项目打包常用的打包插件有三种，分别是：
+
+                插件	                功能
+                maven-jar-plugin	    maven 默认打包插件，用来创建 project jar
+                maven-shade-plugin	    打可执行包，executable(fat) jar
+                maven-assembly-plugin	支持自定义打包方式
+                -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.1.1</version>
+                    <!-- 对要打的jar包进行配置 -->
+                    <configuration>
+                        <!-- Configuration of the archiver -->
+                        <archive>
+                            <!--生成的jar中，不要包含pom.xml和pom.properties这两个文件-->
+                            <addMavenDescriptor>false</addMavenDescriptor>
+
+                            <!-- Manifest specific configuration -->
+                            <manifest>
+                                <!--是否要把第三方jar放到manifest的classpath中-->
+                                <addClasspath>true</addClasspath>
+
+                                <!--生成的manifest中classpath的前缀，
+                                因为要把第三方jar放到lib目录下，
+                                所以classpath的前缀是lib/-->
+                                <classpathPrefix>lib/</classpathPrefix>
+                            </manifest>
+                        </archive>
+                        <!--过滤掉不希望包含在jar中的文件-->
+                        <excludes>
+                            <!-- 排除不需要的文件夹(路径是jar包内部的路径) -->
+                            <exclude>**/assembly/</exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>3.1.1</version>
+                    <!-- 对项目的组装进行配置 -->
+                    <configuration>
+                        <!-- 指定assembly插件的配置文件所在位置 -->
+                        <descriptors>
+                            <descriptor>src/main/resources/assembly/package.xml</descriptor>
+                        </descriptors>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>make-assembly</id>
+                            <!-- 将组装绑定到maven生命周期的哪一阶段 -->
+                            <phase>package</phase>
+                            <goals>
+                                <!-- 指定assembly插件的打包方式-->
+                                <goal>single</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+<!--                <plugin>-->
+<!--                    <groupId>org.apache.maven.plugins</groupId>-->
+<!--                    <artifactId>maven-shade-plugin</artifactId>-->
+<!--                    <version>2.1</version>-->
+<!--                    <executions>-->
+<!--                        <execution>-->
+<!--                            <phase>package</phase>-->
+<!--                            <goals>-->
+<!--                                <goal>shade</goal>-->
+<!--                            </goals>-->
+<!--                            <configuration>-->
+<!--                                &lt;!&ndash; 自动将所有不使用的类全部排除掉 &ndash;&gt;-->
+<!--                                <minimizeJar>false</minimizeJar>-->
+<!--                                <transformers>-->
+<!--                                    <transformer-->
+<!--                                            implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">-->
+<!--                                        <mainClass>com.github.toc.TOCGenerator</mainClass>-->
+<!--                                    </transformer>-->
+<!--                                </transformers>-->
+<!--                                <artifactSet>-->
+<!--                                    <includes>-->
+<!--                                        &lt;!&ndash; 包括哪些类，自定义 &ndash;&gt;-->
+<!--                                        <include>*</include>-->
+<!--                                    </includes>-->
+<!--                                </artifactSet>-->
+<!--                                <filters>-->
+<!--                                    <filter>-->
+<!--                                        <artifact>*:*</artifact>-->
+<!--                                        &lt;!&ndash; 排除哪些类，自定义 &ndash;&gt;-->
+<!--                                        <excludes>-->
+<!--                                            &lt;!&ndash; 排除naive.io &ndash;&gt;-->
+<!--                                            <exclude>org/**</exclude>-->
+<!--                                            &lt;!&ndash; 排除不需要的配置 自定义 &ndash;&gt;-->
+<!--                                            <exclude>remote/**</exclude>-->
+<!--                                            <exclude>local/**</exclude>-->
+<!--                                            <exclude>META-INF/*.SF</exclude>-->
+<!--                                            <exclude>META-INF/*.DSA</exclude>-->
+<!--                                            <exclude>META-INF/*.RSA</exclude>-->
+<!--                                        </excludes>-->
+<!--                                    </filter>-->
+<!--                                </filters>-->
+<!--                            </configuration>-->
+<!--                        </execution>-->
+<!--                    </executions>-->
+<!--                </plugin>-->
+
+                <plugin>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>2.5.2</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.8.2</version>
+                </plugin>
+                <!-- site lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#site_Lifecycle -->
+                <plugin>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.7.1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>3.0.0</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>3.1.1</version>
+                    <executions>
+                        <execution>
+                            <id>copy</id>
+                            <phase>install</phase>
+                            <goals>
+                                <goal>copy-dependencies</goal>
+                            </goals>
+                            <configuration>
+                                <!-- 指定依赖包的输出路径，需与上方的classpathPrefix保持一致 -->
+                                <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>
