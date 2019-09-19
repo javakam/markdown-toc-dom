@@ -47,7 +47,6 @@
             <artifactId>flexmark-util</artifactId>
             <version>0.50.40</version>
         </dependency>
-
     </dependencies>
 
     <build>
