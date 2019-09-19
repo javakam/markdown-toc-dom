@@ -5,7 +5,10 @@
 <https://github.com/YuraAAA/Markdown-Toc-Generator/> <br>
 <https://github.com/zhang0peter/markdown2html>
 
-## 必须要以大写字母 **[TOC]** 作为开头
+## 效果图
+![运行样式](image\效果图.png)
+
+## 可以用 **[TOC]** 或 **[toc]** 开头才会生成目录 , 不写也行...
 ```
 [TOC]
 # Heading **some bold** 

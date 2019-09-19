@@ -1,8 +1,5 @@
 package com.github.toc;
 
-import com.vladsch.flexmark.ext.jekyll.tag.JekyllTagExtension;
-import com.vladsch.flexmark.ext.tables.TablesExtension;
-import com.vladsch.flexmark.ext.toc.SimTocExtension;
 import com.vladsch.flexmark.ext.toc.TocBlock;
 import com.vladsch.flexmark.ext.toc.TocExtension;
 import com.vladsch.flexmark.ext.toc.internal.TocNodeRenderer;
@@ -16,6 +13,9 @@ import com.vladsch.flexmark.util.data.MutableDataHolder;
 import com.vladsch.flexmark.util.data.MutableDataSet;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.Document;
 import javax.swing.text.html.HTMLEditorKit;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -35,6 +35,8 @@ import java.util.Set;
  */
 public class TOCGenerator {
 
+    private static final String PREFIX_TOC_LOW = "[toc]";
+    private static final String PREFIX_TOC_CAP = "[TOC]";
     private final static JTextArea inputArea = new JTextArea();
     private final static JEditorPane htmlPane1 = new JEditorPane();
     private final static JEditorPane htmlPane2 = new JEditorPane();
@@ -42,10 +44,7 @@ public class TOCGenerator {
     private static final DataHolder OPTIONS = new MutableDataSet()
             .set(Parser.EXTENSIONS, Arrays.asList(
                     CustomExtension.create(),
-                    TocExtension.create(),
-                    TablesExtension.create(),
-                    JekyllTagExtension.create(),
-                    SimTocExtension.create()
+                    TocExtension.create()
             ))
             .set(TocExtension.LEVELS, 255)
             .set(TocExtension.TITLE, "目录")
@@ -81,7 +80,7 @@ public class TOCGenerator {
                     // test the node to see if it needs overriding
                     NodeRendererContext subContext = context.getDelegatedSubContext(true);
                     subContext.delegateRender();
-                    String tocText = subContext.getHtmlWriter().toString(0);
+                    final String tocText = subContext.getHtmlWriter().toString(0);
 
                     // output to separate stream
                     System.out.println("---- TOC HTML --------------------");
@@ -113,13 +112,16 @@ public class TOCGenerator {
     }
 
     private TOCGenerator() {
-        frame.setSize(1000, 550);
-        frame.setLocation(150, 80);
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        final int width = 999;
         final Container container = frame.getContentPane();
         container.setLayout(new BorderLayout());
+
+        //设置背景图
+        final ImageIcon img = new ImageIcon("D:\\fastwork\\JetBrains\\IdeaProject\\github-markdown-toc\\src\\main\\java\\com\\github\\toc\\background.jpg"); //添加图片
+        final JLabel background = new JLabel(img);
+        frame.getLayeredPane().add(background, new Integer(Integer.MIN_VALUE));
+//        background.setBounds(0, 0, img.getIconWidth(), img.getIconHeight());
+        background.setBounds(0, 0, 600, 500);
 
         inputArea.setLineWrap(true);
         inputArea.addKeyListener(new KeyAdapter() {
@@ -128,59 +130,85 @@ public class TOCGenerator {
                 refresh();
             }
         });
-
-        htmlPane1.setEditable(false);
-        inputArea.setBackground(new Color(192, 212, 227));
-
+        htmlPane1.setEditable(true);
         HTMLEditorKit kit = new HTMLEditorKit();
         htmlPane2.setEditorKit(kit);
         htmlPane2.setEditable(false);
+        inputArea.setOpaque(false);
+        htmlPane1.setOpaque(false);
+        htmlPane2.setOpaque(false);
 
+        //Title
+        final JPanel panelTitle = new JPanel();
+        panelTitle.setLayout(new GridLayout(1, 3));
+        panelTitle.setBounds(0, 0, width, 30);
+        final JLabel label1 = new JLabel("1.输入Markdown文本");
+        final JLabel label2 = new JLabel("2.DOM格式目录 👉 替换掉[TOC]");
+        final JLabel label3 = new JLabel("3.效果预览");
+//      label1.setBounds(5, 0, width / 3, 28);
+//      label2.setBounds(5, 0, width / 3, 28);
+//      label3.setBounds(5, 0, width / 3, 28);
+        label1.setOpaque(false);
+        label2.setOpaque(false);
+        label3.setOpaque(false);
+        panelTitle.add(label1);
+        panelTitle.add(label2);
+        panelTitle.add(label3);
+        panelTitle.setOpaque(false);
+
+        container.add(panelTitle, BorderLayout.PAGE_START);
+
+        //Content
         final JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(1, 3));
-
         JScrollPane scrollPane1 = new JScrollPane(inputArea);
         JScrollPane scrollPane2 = new JScrollPane(htmlPane1);
         JScrollPane scrollPane3 = new JScrollPane(htmlPane2);
-
+        scrollPane1.setOpaque(false);
+        scrollPane2.setOpaque(false);
+        scrollPane3.setOpaque(false);
         panel.add(scrollPane1);
         panel.add(scrollPane2);
         panel.add(scrollPane3);
-        container.add(panel, BorderLayout.CENTER);
+        panel.setOpaque(false); //设置为透明 这样就不会遮住后面的背景
 
+        container.add(panel, BorderLayout.CENTER);
+        //
+        ((JPanel) container).setOpaque(false);
+        frame.setResizable(true);
+        frame.setSize(width, 550);
+        frame.setLocation(150, 70);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
 
     private void refresh() {
-        String temp = inputArea.getText();
-        if ("".equals(temp)) {
+        final String temp = inputArea.getText();
+        if (temp == null || "".equals(temp)) {
             htmlPane1.setText("");
             htmlPane2.setText("");
+            return;
         }
+        final boolean isLowerTocStart = temp.trim().startsWith(PREFIX_TOC_LOW);
+        final boolean isNoTocStart = !isLowerTocStart && !temp.trim().startsWith(PREFIX_TOC_CAP);
 
-        String html = RENDERER.render(PARSER.parse(temp));
+        String html = "";
+        if (isLowerTocStart) {
+            String newTemp = temp.replaceFirst(PREFIX_TOC_LOW, PREFIX_TOC_CAP);
+            html = RENDERER.render(PARSER.parse("[TOC]\n" + newTemp));
+        } else if (isNoTocStart) {
+            html = RENDERER.render(PARSER.parse("[TOC]\n" + temp));
+        } else {
+            html = RENDERER.render(PARSER.parse(temp));
+        }
         //  System.out.println(html);
+        //  if (isNoTocStart) { htmlPane1.setText(""); }
         htmlPane2.setText(html);
-
-//        String toc = RENDERER.render(PARSER.parse("[TOC]\n" + temp));
-        //  System.out.println(toc);
-//        if (html2.indexOf("<div class=\"toc\">") == -1) {
-//            htmlPane2.setText("");
-//        } else {
-//            htmlPane2.setText(html2.substring(0, 6 + html2.indexOf("</div>")));
-//        }
-
-//        htmlPane2.setText(RENDERER.render(PARSER.parse(temp)));
     }
 
+    //IDEA Build Artifacts
     //生成jar包 : mvn clean install -DskipTests
     public static void main(String[] args) {
         new TOCGenerator();
-
-//        String fileSource = System.getProperty("src");
-//        if (!TOCUtils.checkSourceFile(fileSource)) {
-//            System.out.println("Source file doesn't exists or can't be read. Make sure -Dsrc= param set");
-//            return;
-//        }
     }
 }
