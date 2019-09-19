@@ -8,6 +8,11 @@
 ## 效果图
 ![Image text](image/效果图.png)
 
+## 使用方式
+1.下载 [github-markdown-toc.jar](https://github-production-release-asset-2e65be.s3.amazonaws.com/209262321/81b10380-dadd-11e9-9256-2dc4e75bca9c?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20190919%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20190919T050808Z&X-Amz-Expires=300&X-Amz-Signature=9e839da17fcee53d4fb1f2250f0ace131be742166c14f8c531d7070db230a528&X-Amz-SignedHeaders=host&actor_id=15343661&response-content-disposition=attachment%3B%20filename%3Dgithub-markdown-toc.jar&response-content-type=application%2Foctet-stream) ;
+2.安装 Java 运行环境;
+3.双击运行
+
 ## 可以用 **[TOC]** 或 **[toc]** 开头才会生成目录 , 不写也行...
 ```
 [TOC]

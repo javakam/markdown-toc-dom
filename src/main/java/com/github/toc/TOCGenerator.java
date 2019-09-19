@@ -13,9 +13,6 @@ import com.vladsch.flexmark.util.data.MutableDataHolder;
 import com.vladsch.flexmark.util.data.MutableDataSet;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.text.Document;
 import javax.swing.text.html.HTMLEditorKit;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -25,9 +22,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Title:App
+ * Title:TOCGenerator
  * <p>
- * Description:
+ * Description:github 不支持 Markdown toc 的解决方案
  * </p>
  *
  * @author Changbao
@@ -113,15 +110,15 @@ public class TOCGenerator {
 
     private TOCGenerator() {
         final int width = 999;
+        final int height = 624;
         final Container container = frame.getContentPane();
         container.setLayout(new BorderLayout());
 
         //设置背景图
-        final ImageIcon img = new ImageIcon("D:\\fastwork\\JetBrains\\IdeaProject\\github-markdown-toc\\src\\main\\java\\com\\github\\toc\\background.jpg"); //添加图片
+        final ImageIcon img = new ImageIcon("src/image/background.jpg"); //添加图片
         final JLabel background = new JLabel(img);
         frame.getLayeredPane().add(background, new Integer(Integer.MIN_VALUE));
-//        background.setBounds(0, 0, img.getIconWidth(), img.getIconHeight());
-        background.setBounds(0, 0, 600, 500);
+        background.setBounds(0, 0, img.getIconWidth(), img.getIconHeight());
 
         inputArea.setLineWrap(true);
         inputArea.addKeyListener(new KeyAdapter() {
@@ -145,9 +142,6 @@ public class TOCGenerator {
         final JLabel label1 = new JLabel("1.输入Markdown文本");
         final JLabel label2 = new JLabel("2.DOM格式目录 👉 替换掉[TOC]");
         final JLabel label3 = new JLabel("3.效果预览");
-//      label1.setBounds(5, 0, width / 3, 28);
-//      label2.setBounds(5, 0, width / 3, 28);
-//      label3.setBounds(5, 0, width / 3, 28);
         label1.setOpaque(false);
         label2.setOpaque(false);
         label3.setOpaque(false);
@@ -167,6 +161,9 @@ public class TOCGenerator {
         scrollPane1.setOpaque(false);
         scrollPane2.setOpaque(false);
         scrollPane3.setOpaque(false);
+        scrollPane1.getViewport().setOpaque(false);
+        scrollPane2.getViewport().setOpaque(false);
+        scrollPane3.getViewport().setOpaque(false);
         panel.add(scrollPane1);
         panel.add(scrollPane2);
         panel.add(scrollPane3);
@@ -176,8 +173,9 @@ public class TOCGenerator {
         //
         ((JPanel) container).setOpaque(false);
         frame.setResizable(true);
-        frame.setSize(width, 550);
-        frame.setLocation(150, 70);
+//        frame.setSize(width, height);
+        frame.setSize(img.getIconWidth(), img.getIconHeight());
+        frame.setLocation(160, 80);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
@@ -194,7 +192,8 @@ public class TOCGenerator {
 
         String html = "";
         if (isLowerTocStart) {
-            String newTemp = temp.replaceFirst(PREFIX_TOC_LOW, PREFIX_TOC_CAP);
+            System.out.println("isLowerTocStart ======== " + isLowerTocStart);
+            String newTemp = temp.replaceFirst("\\[toc\\]", PREFIX_TOC_CAP);//[toc] -> [TOC]
             html = RENDERER.render(PARSER.parse("[TOC]\n" + newTemp));
         } else if (isNoTocStart) {
             html = RENDERER.render(PARSER.parse("[TOC]\n" + temp));
