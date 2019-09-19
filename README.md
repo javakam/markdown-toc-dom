@@ -6,7 +6,7 @@
 <https://github.com/zhang0peter/markdown2html>
 
 ## 效果图
-![运行样式](image\效果图.png)
+![Image text](image/效果图.png)
 
 ## 可以用 **[TOC]** 或 **[toc]** 开头才会生成目录 , 不写也行...
 ```
