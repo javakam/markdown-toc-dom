@@ -198,9 +198,8 @@ public class TOCGenerator {
         final boolean isNoTocStart = !isLowerTocStart && !temp.trim().startsWith(PREFIX_TOC_CAP);
 
         String html = "";
-        if (isLowerTocStart) {
-            System.out.println("isLowerTocStart ======== " + isLowerTocStart);
-            String newTemp = temp.replaceFirst("\\[toc\\]", PREFIX_TOC_CAP);//[toc] -> [TOC]
+        if (isLowerTocStart) {//[toc] -> [TOC]
+            String newTemp = temp.replaceFirst("\\[toc\\]", "");
             html = RENDERER.render(PARSER.parse("[TOC]\n" + newTemp));
         } else if (isNoTocStart) {
             html = RENDERER.render(PARSER.parse("[TOC]\n" + temp));
