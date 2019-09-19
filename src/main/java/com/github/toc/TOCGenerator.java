@@ -17,6 +17,11 @@ import javax.swing.text.html.HTMLEditorKit;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -115,7 +120,9 @@ public class TOCGenerator {
         container.setLayout(new BorderLayout());
 
         //设置背景图
-        final ImageIcon img = new ImageIcon("src/image/background.jpg"); //添加图片
+        //返回读取指定资源的输入流 -> 定为资源位置 eg: file:/D:/fastwork/JetBrains/IdeaProject/github-markdown-toc/target/classes/
+        //System.out.println(TOCGenerator.class.getResource("/"));
+        final ImageIcon img = new ImageIcon(this.getClass().getResource("/image/background.jpg")); //添加图片
         final JLabel background = new JLabel(img);
         frame.getLayeredPane().add(background, new Integer(Integer.MIN_VALUE));
         background.setBounds(0, 0, img.getIconWidth(), img.getIconHeight());
