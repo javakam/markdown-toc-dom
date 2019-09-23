@@ -373,8 +373,8 @@ public class TOCGenerator {
 
     private static final StringBuilder HTML_BEGIN = new StringBuilder();
     private static final StringBuilder HTML_END = new StringBuilder();
-    private static final String RES_LINE = "https://img2018.cnblogs.com/blog/803593/201909/803593-20190923105726009-1976971018.gif";
-    private static final String RES_zTreeStandard = "https://img2018.cnblogs.com/blog/803593/201909/803593-20190923105710930-1100756800.png";
+    private static final String RES_LINE = "";
+    private static final String RES_zTreeStandard = "";
 
     static {
         HTML_BEGIN.append("<!-- 插件官网地址：http://ruby-china.org/topics/17028 -->\r\n<html>\r\n <head>\r\n  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\r\n <head><title>")
