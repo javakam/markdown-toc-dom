@@ -245,7 +245,7 @@ public class TOCGenerator {
                     }
                     final String substring = fileName.substring(0, fileName.length() - 5);
                     final LocalDateTime now = LocalDateTime.now();
-                    targetFile = new File(dirPath, String.format("%s %s.html", substring, formatter.format(now)));
+                    targetFile = new File(dirPath, String.format("%s-%s.html", substring, formatter.format(now)));
                     readFile();
                     if (!tag) {
                         writeFile();
