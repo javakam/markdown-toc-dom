@@ -59,4 +59,4 @@
 ## 支持html文件生成目录
 [sample.html](files/sample.html) 👉 [sample 20190923113143.html](files/sample 20190923113143.html)
 ### 效果
-[README.md](README.md) 👉 <a href="https://github.com/javakam/markdown-toc-dom/blob/master/files/README.md" target="_blank">README.html</a>(**浏览器打开**)
+[README.md](README.md) 👉 <a href="https://github.com/javakam/markdown-toc-dom/blob/master/files/README.html" target="_blank">README.html</a>(**浏览器打开**)
