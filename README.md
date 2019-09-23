@@ -4,6 +4,8 @@
 <https://blog.csdn.net/JavaKam/article/details/101020144>
 
 ## 参考项目: <br>
+[flexmark-java](https://github.com/vsch/flexmark-java) <br>
+[i5ting_ztree_toc](https://github.com/i5ting/i5ting_ztree_toc) <br>
 <https://github.com/YuraAAA/Markdown-Toc-Generator/> <br>
 <https://github.com/zhang0peter/markdown2html>
 
