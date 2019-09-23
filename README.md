@@ -10,7 +10,9 @@
 <https://github.com/zhang0peter/markdown2html>
 
 ## 效果图
-![Image text](image/效果图.png)
+![Image text](files/效果图.png)<br>
+![Image text](files/效果图1.png)<br>
+![Image text](files/效果图2.png)<br>
 
 ## 使用方式
 1.下载 [github-markdown-toc.jar](https://github.com/javakam/markdown-toc-dom/releases)
