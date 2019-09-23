@@ -59,7 +59,7 @@
 ## 支持html文件生成目录
 [sample.html](files/sample.html) 👉 [sample 20190923113143.html](files/sample 20190923113143.html)
 ### 效果
-[README.md](README.md) 👉 <a href="https://javakam.github.io/2019/09/23/README" target="_blank"><b>README.html</b></a>(**浏览器打开**)
+[README.md](README.md) 👉 <a href="https://javakam.github.io/2019/09/23/README" target="_blank"><b>README.html</b></a>
 
 <!-- https://blog.csdn.net/xudailong_blog/article/details/78762262 -->
 <!--https://643435675.github.io/2015/02/15/create-my-blog-with-jekyll/-->
