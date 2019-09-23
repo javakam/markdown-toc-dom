@@ -27,7 +27,7 @@
 #### Heading 1.1.2.1  **_some bold italic_666**
 ##### Heading 1.1.2.1.1  **_some bold 2222**
 ``` 
-> 上面代码生成效果:
+### 效果
 
 <div class="toc">
 <h1>目录</h1>
@@ -53,4 +53,6 @@
 </ul>
 </div>
 
-         
+---   
+## 支持html文件生成目录
+sample.html -> sample 20190923113143.html
