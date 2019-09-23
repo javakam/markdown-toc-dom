@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.doc</groupId>
-    <artifactId>github-markdown-toc</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <artifactId>markdown-toc-dom</artifactId>
+    <version>1.2-SNAPSHOT</version>
 
-    <name>github-markdown-toc</name>
-    <url>http://www.example.com</url>
+    <name>markdown-toc-dom</name>
+    <url>https://github.com/javakam/markdown-toc-dom</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
