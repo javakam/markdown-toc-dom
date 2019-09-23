@@ -10,7 +10,6 @@
 <https://github.com/zhang0peter/markdown2html>
 
 ## 效果图
-![Image text](files/效果图.png)<br>
 ![Image text](files/效果图1.png)<br>
 ![Image text](files/效果图2.png)<br>
 
@@ -60,4 +59,4 @@
 ## 支持html文件生成目录
 [sample.html](files/sample.html) 👉 [sample 20190923113143.html](files/sample 20190923113143.html)
 ### 效果
-[README.md](README.md) 👉 [README.html](files/README.html)
+[README.md](README.md) 👉 <a href="https://github.com/javakam/markdown-toc-dom/blob/master/files/README.md" target="_blank">README.html</a>(**浏览器打开**)
