@@ -373,8 +373,8 @@ public class TOCGenerator {
 
     private static final StringBuilder HTML_BEGIN = new StringBuilder();
     private static final StringBuilder HTML_END = new StringBuilder();
-    private static final String RES_LINE = "";
-    private static final String RES_zTreeStandard = "";
+    private static final String RES_LINE = "https://raw.githubusercontent.com/javakam/markdown-toc-dom/master/files/line_conn.gif";
+    private static final String RES_zTreeStandard = "https://raw.githubusercontent.com/javakam/markdown-toc-dom/master/files/zTreeStandard.png";
 
     static {
         HTML_BEGIN.append("<!-- 插件官网地址：http://ruby-china.org/topics/17028 -->\r\n<html>\r\n <head>\r\n  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\r\n <head><title>")
