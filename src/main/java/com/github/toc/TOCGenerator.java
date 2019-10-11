@@ -172,8 +172,8 @@ public class TOCGenerator {
         final JPanel panelTitle = new JPanel();
         panelTitle.setLayout(new GridLayout(1, 3));
         panelTitle.setBounds(0, 0, width, 30);
-        final JLabel label1 = new JLabel("1.输入Markdown文本");
-        final JLabel label2 = new JLabel("2.DOM格式目录 👉 替换掉[TOC]");
+        final JLabel label1 = new JLabel("1.粘贴内容(md)");
+        final JLabel label2 = new JLabel("2.目录代码");
         final JLabel label3 = new JLabel("3.效果预览");
         label1.setOpaque(false);
         label2.setOpaque(false);
